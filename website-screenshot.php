@@ -6,6 +6,8 @@ Description:
 Version: 1.0.1
 Author: PressMaximum
 Author URI: https://pressmaximum.com
+Text Domain: wordpress-seo
+Domain Path: /languages/
 Contributors: shrimp2t
 */
 namespace WS\Blocks;

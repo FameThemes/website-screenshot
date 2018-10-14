@@ -17,7 +17,7 @@ function ajax_fetch() {
 		'title' => '',
 		'websiteUrl' => '',
 		'_nonce' => '',
-		
+
 		'viewportWidth' =>  null,
 		'viewportHeight' =>  null,
 		'delay' =>  null,

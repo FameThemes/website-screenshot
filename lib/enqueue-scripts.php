@@ -41,7 +41,7 @@ add_action( 'enqueue_block_assets', __NAMESPACE__ . '\enqueue_assets' );
 function enqueue_assets() {
 	$style_path = '/assets/css/blocks.style.css';
 	wp_enqueue_style(
-		'jsforwp-blocks',
+		'website-screenshot',
 		_get_plugin_url() . $style_path,
 		[ 'wp-blocks' ],
 		filemtime( _get_plugin_directory() . $style_path )
@@ -61,7 +61,7 @@ function enqueue_frontend_assets() {
 
 	$block_path = '/assets/js/frontend.blocks.js';
 	wp_enqueue_script(
-		'jsforwp-blocks-frontend',
+		'website-screenshot-frontend',
 		_get_plugin_url() . $block_path,
 		[],
 		filemtime( _get_plugin_directory() . $block_path )
