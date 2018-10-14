@@ -1,0 +1,26 @@
+.wp-block-ft-website-screenshot {
+    .image-wrapper {
+        position: relative;
+        .remove-image {
+            position: absolute;
+            top: 1em;
+            right: 1em;
+        }
+        .wp-block-image  {
+            &.alignfull {
+                width: 100%;
+                max-width: 100%;
+            }
+        }
+    }
+    .media-form  {
+        max-width: 600px;
+        margin: 0 auto;
+        padding: 2.5em;
+
+        &.image-added {
+            display: none;
+        }
+
+    }
+}

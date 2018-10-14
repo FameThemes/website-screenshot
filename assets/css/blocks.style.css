@@ -1,0 +1,117 @@
+.entry-content .wp-block-website-screenshot-text-alignment-toolbar,
+.wp-block-website-screenshot-text-alignment-toolbar {
+  background: rgba(254, 243, 224, 0.52);
+  border: 5px #f7b733 solid;
+  padding: 1rem; }
+  .entry-content .wp-block-website-screenshot-text-alignment-toolbar h2,
+  .wp-block-website-screenshot-text-alignment-toolbar h2 {
+    color: #f7b733;
+    font-size: 2rem;
+    margin: 1rem 0; }
+  .entry-content .wp-block-website-screenshot-text-alignment-toolbar p,
+  .wp-block-website-screenshot-text-alignment-toolbar p {
+    font-size: 1.4rem; }
+  .entry-content .wp-block-website-screenshot-text-alignment-toolbar li,
+  .wp-block-website-screenshot-text-alignment-toolbar li {
+    list-style-position: inside; }
+.entry-content .wp-block-website-screenshot-block-alignment-toolbar,
+.wp-block-website-screenshot-block-alignment-toolbar {
+  background: rgba(254, 243, 224, 0.52);
+  border: 5px #f7b733 solid;
+  padding: 1rem; }
+  .entry-content .wp-block-website-screenshot-block-alignment-toolbar h2,
+  .wp-block-website-screenshot-block-alignment-toolbar h2 {
+    color: #f7b733;
+    font-size: 2rem;
+    margin: 1rem 0; }
+  .entry-content .wp-block-website-screenshot-block-alignment-toolbar p,
+  .wp-block-website-screenshot-block-alignment-toolbar p {
+    font-size: 1.4rem; }
+  .entry-content .wp-block-website-screenshot-block-alignment-toolbar li,
+  .wp-block-website-screenshot-block-alignment-toolbar li {
+    list-style-position: inside; }
+.entry-content .wp-block-website-screenshot-inspector-controls,
+.wp-block-website-screenshot-inspector-controls {
+  background: rgba(254, 243, 224, 0.52);
+  border: 5px #f7b733 solid;
+  padding: 1rem; }
+  .entry-content .wp-block-website-screenshot-inspector-controls.high-contrast,
+  .wp-block-website-screenshot-inspector-controls.high-contrast {
+    background: #000;
+    border-color: #000;
+    color: white; }
+  .entry-content .wp-block-website-screenshot-inspector-controls h2,
+  .wp-block-website-screenshot-inspector-controls h2 {
+    color: #f7b733;
+    font-size: 2rem;
+    margin: 1rem 0; }
+  .entry-content .wp-block-website-screenshot-inspector-controls p,
+  .wp-block-website-screenshot-inspector-controls p {
+    font-size: 1.4rem; }
+  .entry-content .wp-block-website-screenshot-inspector-controls li,
+  .wp-block-website-screenshot-inspector-controls li {
+    list-style-position: inside; }
+.entry-content .wp-block-website-screenshot-inspector-control-fields,
+.wp-block-website-screenshot-inspector-control-fields {
+  background: rgba(254, 243, 224, 0.52);
+  border: 5px #f7b733 solid;
+  padding: 1rem; }
+  .entry-content .wp-block-website-screenshot-inspector-control-fields.high-contrast,
+  .wp-block-website-screenshot-inspector-control-fields.high-contrast {
+    background: #000;
+    border-color: #000;
+    color: white; }
+  .entry-content .wp-block-website-screenshot-inspector-control-fields h2,
+  .wp-block-website-screenshot-inspector-control-fields h2 {
+    color: #f7b733;
+    font-size: 2rem;
+    margin: 1rem 0; }
+  .entry-content .wp-block-website-screenshot-inspector-control-fields p,
+  .wp-block-website-screenshot-inspector-control-fields p {
+    font-size: 1.4rem; }
+  .entry-content .wp-block-website-screenshot-inspector-control-fields li,
+  .wp-block-website-screenshot-inspector-control-fields li {
+    list-style-position: inside; }
+.entry-content .wp-block-website-screenshot-form-fields,
+.wp-block-website-screenshot-form-fields {
+  background: rgba(254, 243, 224, 0.52);
+  border: 5px #f7b733 solid;
+  padding: 1rem; }
+  .entry-content .wp-block-website-screenshot-form-fields h2,
+  .wp-block-website-screenshot-form-fields h2 {
+    color: #f7b733;
+    font-size: 2rem;
+    margin: 1rem 0; }
+  .entry-content .wp-block-website-screenshot-form-fields p,
+  .wp-block-website-screenshot-form-fields p {
+    font-size: 1.4rem; }
+  .entry-content .wp-block-website-screenshot-form-fields li,
+  .wp-block-website-screenshot-form-fields li {
+    list-style-position: inside; }
+.wp-block-website-screenshot-dynamic li {
+  list-style-position: inside; }
+
+.wp-block-website-screenshot-dynamic .spinner {
+  float: none;
+  margin: 6px 2px 10px 0; }
+.entry-content .wp-block-website-screenshot-inspector-control-fields,
+.wp-block-website-screenshot-inspector-control-fields {
+  background: rgba(254, 243, 224, 0.52);
+  border: 5px #f7b733 solid;
+  padding: 1rem; }
+  .entry-content .wp-block-website-screenshot-inspector-control-fields.high-contrast,
+  .wp-block-website-screenshot-inspector-control-fields.high-contrast {
+    background: #000;
+    border-color: #000;
+    color: white; }
+  .entry-content .wp-block-website-screenshot-inspector-control-fields h2,
+  .wp-block-website-screenshot-inspector-control-fields h2 {
+    color: #f7b733;
+    font-size: 2rem;
+    margin: 1rem 0; }
+  .entry-content .wp-block-website-screenshot-inspector-control-fields p,
+  .wp-block-website-screenshot-inspector-control-fields p {
+    font-size: 1.4rem; }
+  .entry-content .wp-block-website-screenshot-inspector-control-fields li,
+  .wp-block-website-screenshot-inspector-control-fields li {
+    list-style-position: inside; }
