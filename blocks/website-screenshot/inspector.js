@@ -57,6 +57,17 @@ function getSettingsValue( attributes ) {
 }
 
 
+/**
+ * Module constants
+ */
+const MIN_SIZE = 20;
+const LINK_DESTINATION_NONE = 'none';
+const LINK_DESTINATION_MEDIA = 'media';
+const LINK_DESTINATION_ATTACHMENT = 'attachment';
+const LINK_DESTINATION_CUSTOM = 'custom';
+const ALLOWED_MEDIA_TYPES = [ 'image' ];
+
+
 
 /**
  * Create an Inspector Controls wrapper Component
@@ -65,7 +76,52 @@ export default class Inspector extends Component {
 
     constructor() {
         super( ...arguments );
+
+        this.onSetLinkDestination = this.onSetLinkDestination.bind( this );
+        this.onSetCustomHref = this.onSetCustomHref.bind( this );
+
     }
+
+    getLinkDestinationOptions() {
+		return [
+            { value: LINK_DESTINATION_NONE, label: __( 'None' ) },
+			{ value: LINK_DESTINATION_MEDIA, label: __( 'Media File' ) },
+			{ value: LINK_DESTINATION_ATTACHMENT, label: __( 'Attachment Page' ) },
+			{ value: LINK_DESTINATION_CUSTOM, label: __( 'Custom URL' ) },
+		];
+	}
+
+    onSetLinkDestination( value ) {
+		let url;
+
+		if ( value === LINK_DESTINATION_NONE ) {
+			url = undefined;
+		} else if ( value === LINK_DESTINATION_MEDIA ) {
+			url = this.props.attributes.url;
+		} else if ( value === LINK_DESTINATION_ATTACHMENT ) {
+			url = this.props.image && this.props.image.link;
+		} else {
+			url = this.props.attributes.href;
+		}
+
+		this.props.setAttributes( {
+			linkTo: value,
+			url,
+		} );
+	}
+
+    onSetCustomHref( value ) {
+		this.props.setAttributes( { href: value } );
+	}
+
+    getAvailableSizes() {
+		return [
+                    { value: 'a', label: __( 'Option A', 'website-screenshot' ) },
+                    { value: 'b', label: __( 'Option B', 'website-screenshot' ) },
+                    { value: 'c', label: __( 'Option C', 'website-screenshot' ) },
+                ]
+	}
+
 
     render() {
         const { attributes: {
@@ -78,133 +134,66 @@ export default class Inspector extends Component {
             imgAlt,
             full,
             delay,
+            url,
+            linkTo
         }, setAttributes, attributes } = this.props;
 
-        const onSelectImage = img => {
-            setAttributes( {
-                imgID: img.id,
-                imgURL: img.url,
-                imgAlt: img.alt,
-            } );
-        };
 
 
-        const onFetchURL = async evt => {
-            evt.preventDefault();
+        if ( ! imgURL ) {
+            return '';
+        }
 
-            let button = evt.target;
+        const isLinkURLInputDisabled = linkTo !== 'custom';
 
-            if ( button.classList.contains('is-busy') ) {
-                evt.preventDefault();
-            }
-
-            button.classList.add("is-busy");
-            button.setAttribute("disabled", "");
-
-            let settingValues = getSettingsValue( attributes );
-            settingValues._nonce = WebsiteScreenShot.nonce;
-
-            const response = await fetch( WebsiteScreenShot.ajax_fetch_url, {
-                cache: 'no-cache',
-                headers: {
-                    'user-agent': 'WP Block',
-                    "Content-Type": "application/json; charset=utf-8",
-                    //"Content-Type": "application/x-www-form-urlencoded",
-                  },
-                method: 'POST',
-                redirect: 'follow',
-                referrer: 'no-referrer',
-                body: JSON.stringify( settingValues ),
-            })
-            .then(
-                returned => {
-                    if (returned.ok) return returned;
-                    throw new Error('Network response was not ok.');
-                }
-            );
-
-            let data = await response.json();
-
-            // removeAttribute
-            button.classList.remove("is-busy");
-            button.removeAttribute("disabled");
-            console.log( 'data', data );
-
-            setAttributes( {
-               imgID: data.id,
-               imgURL: data.url,
-               imgAlt: data.alt,
-           } );
-
-        };
+        const availableSizes = this.getAvailableSizes();
 
 
         return (
+
             <InspectorControls>
-                <PanelBody
-                    title={ __( 'Website Screenshot', 'website-screenshot' ) }
-                    initialOpen={ true }
-                    >
-
-                    <TextControl
-                        label={ __( 'Website URL', 'website-screenshot' ) }
-                        placeholder={ __( 'https://yoursite-url.com', 'website-screenshot' ) }
-                        value={ websiteUrl }
-                        onChange={ websiteUrl => setAttributes( { websiteUrl } ) }
-                    />
-
-                    <TextControl
-                        label={ __( 'Title', 'website-screenshot' ) }
-                        value={ title }
-                        onChange={ title => setAttributes( { title } ) }
-                    />
-
-                    <TextControl
-                        label={ __( 'Viewport Width', 'website-screenshot' ) }
-                        help={ __( 'Custom image width', 'website-screenshot' ) }
-                        value={ viewportWidth }
-                        type={ 'number' }
-                        onChange={ viewportWidth => setAttributes( { viewportWidth } ) }
-                    />
-
-                    <TextControl
-                        label={ __( 'Viewport Height', 'website-screenshot' ) }
-                        help={ __( 'Custom image height', 'website-screenshot' ) }
-                        value={ viewportHeight }
-                        type={ 'number' }
-                        onChange={ viewportHeight => setAttributes( { viewportHeight } ) }
-                    />
-
-                    <TextControl
-                        label={ __( 'Delay', 'website-screenshot' ) }
-                        help={ __( 'If set, we\'ll wait for the specified number of milliseconds after the page load event before taking a screenshot.', 'website-screenshot' ) }
-                        value={ delay }
-                        type={ 'number' }
-                        onChange={ delay => setAttributes( { delay } ) }
-                    />
-
-                    <ToggleControl
-                        label={ __( 'Full Entry', 'website-screenshot' ) }
-                        checked={ full }
-                        onChange={ full => setAttributes( { full } ) }
-                    />
-
-
-                    <Button
-                        className={ "button button-large" }
-                        onClick={ onFetchURL }
-                        >
-                        { __( 'Take Screenshot', 'website-screenshot' ) }
-                    </Button>
-
-                </PanelBody>
 
                 <PanelBody
                     title={ __( 'Image Settings', 'website-screenshot' ) }
                     initialOpen={ true }
                     >
 
+                    <TextareaControl
+                        label={ __( 'Alt Text', 'website-screenshot' ) }
+                        placeholder={ __( 'Alternative Text', 'website-screenshot' ) }
+                        value={ imgAlt }
+                        onChange={ imgAlt => setAttributes( { imgAlt } ) }
+                    />
+
+
                 </PanelBody>
+
+                <PanelBody
+                    title={ __( 'Link Settings', 'website-screenshot' ) }
+                    initialOpen={ false }
+                    >
+
+                    <SelectControl
+						label={ __( 'Link To' ) }
+						value={ linkTo }
+						options={ this.getLinkDestinationOptions() }
+						onChange={ this.onSetLinkDestination }
+					/>
+
+                    { linkTo !== 'none' && (
+						<TextControl
+							label={ __( 'Link URL' ) }
+							value={ url || '' }
+							onChange={ this.onSetCustomHref }
+							placeholder={ ! isLinkURLInputDisabled ? 'https://' : undefined }
+							disabled={ isLinkURLInputDisabled }
+						/>
+					) }
+
+
+                </PanelBody>
+
+
 
 
             </InspectorControls>

@@ -27,6 +27,14 @@ const attributes = {
         //attribute: 'alt',
         //selector: 'img',
     },
+    url: {
+        default: '',
+        type: 'string',
+    },
+    linkTo: {
+        default: 'none',
+        type: 'string',
+    },
     viewportWidth: {
         type: 'number',
         default: null,

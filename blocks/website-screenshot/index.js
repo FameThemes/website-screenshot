@@ -2,7 +2,7 @@
  * Block dependencies
  */
 import classnames from 'classnames';
-//import Inspector from './inspector';
+import Inspector from './inspector';
 import Controls from './controls';
 //import WSEdit from "./edit";
 import icons from './icons';
@@ -74,7 +74,7 @@ export default registerBlockType(
     'ft/website-screenshot',
     {
         title: __( 'Website Screenshot', 'website-screenshot' ),
-        description: __( 'The settings only apply when you take a website screenshot.', 'website-screenshot'),
+        description: __( 'Image Settings', 'website-screenshot'),
         category: 'common',
         icon: {
             //background: 'rgba(254, 243, 224, 0.52)',
@@ -194,7 +194,7 @@ export default registerBlockType(
 
 
             return [
-                //<Inspector  {...{ setAttributes, ...props }} />,
+                <Inspector  {...{ setAttributes, ...props }} />,
                 <Controls   {...{ setAttributes, ...props }} />,
                 //<WSEdit       {...{ setAttributes, ...props }} />
 
