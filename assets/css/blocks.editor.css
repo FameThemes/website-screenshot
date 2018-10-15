@@ -7,9 +7,12 @@
     color: red; }
     .wp-block-ft-website-screenshot .image-wrapper .remove-image svg {
       fill: currentColor; }
-  .wp-block-ft-website-screenshot .image-wrapper .wp-block-image.alignfull {
+  .wp-block-ft-website-screenshot .image-wrapper .preview-image {
     width: 100%;
     max-width: 100%; }
+    .wp-block-ft-website-screenshot .image-wrapper .preview-image.alignfull {
+      width: 100%;
+      max-width: 100%; }
 
 .wp-block-ft-website-screenshot .media-form {
   background: #ededed;

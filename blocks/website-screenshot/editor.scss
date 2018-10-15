@@ -10,7 +10,9 @@
                 fill: currentColor;
             }
         }
-        .wp-block-image  {
+        .preview-image  {
+            width: 100%;
+            max-width: 100%;
             &.alignfull {
                 width: 100%;
                 max-width: 100%;

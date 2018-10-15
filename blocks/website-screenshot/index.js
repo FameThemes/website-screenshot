@@ -86,9 +86,10 @@ export default registerBlockType(
             __( 'Scheme', 'website-screenshot' ),
         ],
         attributes,
+
         getEditWrapperProps( attributes ) {
             const { blockAlignment } = attributes;
-            if ( 'left' === blockAlignment || 'right' === blockAlignment || 'full' === blockAlignment ) {
+            if ( 'left' === blockAlignment || 'right' === blockAlignment  || 'wide' === blockAlignment || 'full' === blockAlignment ) {
                 return { 'data-align': blockAlignment };
             }
         },
@@ -203,7 +204,7 @@ export default registerBlockType(
 
                         <div class="image-wrapper">
                             <img
-                                className={ `wp-block-image align${blockAlignment}` }
+                                className={ 'preview-image' }
                                 src={ imgURL }
                                 alt={ imgAlt }
                             />
