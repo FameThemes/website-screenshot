@@ -2,11 +2,11 @@
  * Block dependencies
  */
 import classnames from 'classnames';
-import Inspector from './inspector';
+//import Inspector from './inspector';
 import Controls from './controls';
 //import WSEdit from "./edit";
 import icons from './icons';
-import icon from './icon';
+//import icon from './icon';
 import attributes from './attributes';
 import './style.scss';
 import './editor.scss';
@@ -77,8 +77,8 @@ export default registerBlockType(
         description: __( 'The settings only apply when you take a website screenshot.', 'website-screenshot'),
         category: 'common',
         icon: {
-            background: 'rgba(254, 243, 224, 0.52)',
-            src: icon,
+            //background: 'rgba(254, 243, 224, 0.52)',
+            src: icons.block,
         },
         keywords: [
             __( 'Palette', 'website-screenshot' ),
@@ -99,6 +99,7 @@ export default registerBlockType(
             const {
                 attributes: {
         		    websiteUrl,
+                    title,
                     imgID,
     			    imgURL,
     			    imgAlt,
@@ -106,16 +107,14 @@ export default registerBlockType(
                     blockAlignment,
                     viewportWidth,
                     viewportHeight,
-                    message
+                    full,
+                    delay,
                 },
     		    className , isSelected, setAttributes, attributes
     	    } = props;
 
             let settings = getSettings( attributes );
             let values = getSettingsValue( attributes );
-
-            console.log( 'props', props );
-
 
     	    const onSelectImage = ( img ) => {
     		    setAttributes( {
@@ -136,6 +135,7 @@ export default registerBlockType(
 
 
             const onFetchURL = async evt => {
+                evt.preventDefault();
 
                 let button = evt.target;
 
@@ -178,8 +178,13 @@ export default registerBlockType(
                 setAttributes( {
                    imgID: data.id,
                    imgURL: data.url,
-                   imgAlt: data.alt,
                } );
+
+               if ( ! settingValues.imgAlt ) {
+                   setAttributes( {
+                      imgAlt: data.alt,
+                  } );
+               }
 
                console.log( 'settings', getSettingsValue( attributes ) );
 
@@ -188,7 +193,7 @@ export default registerBlockType(
 
 
             return [
-                <Inspector  {...{ setAttributes, ...props }} />,
+                //<Inspector  {...{ setAttributes, ...props }} />,
                 <Controls   {...{ setAttributes, ...props }} />,
                 //<WSEdit       {...{ setAttributes, ...props }} />
 
@@ -212,56 +217,67 @@ export default registerBlockType(
 
                         </div>
 
-                        ) : (
-
-                            <div class="no-image">
-                                { __( 'No Image', 'website-screenshot' ) }
-                            </div>
-
-                        )
+                        ) : ''
                     }
 
 
                     <div className={ imgID ? 'media-form image-added' : 'media-form no-image' }>
+                        <div class="media-form-inner">
+                            <div class="no-image">
+                                { __( 'No Image Selected', 'website-screenshot' ) }
+                            </div>
 
-                        <div class="media-upload">
-                            <MediaUpload
-                    	        onSelect={ onSelectImage }
-                    	        type="image"
-                    	        value={ imgID }
-                    	        render={ ( { open } ) => (
+                            <div class="media-upload">
+                                <MediaUpload
+                        	        onSelect={ onSelectImage }
+                        	        type="image"
+                        	        value={ imgID }
+                        	        render={ ( { open } ) => (
+                                    <Button
+                            	        className={ "button button-large" }
+                            	        onClick={ open }
+                            		        >
+                            		        { icons.upload }
+                            	        { __( ' Upload Image', 'website-screenshot' ) }
+                                    </Button>
+                                    ) }
+                                >
+                                </MediaUpload>
+                            </div>
+
+                            <span class="or-method">{ __( 'or', 'website-screenshot' ) }</span>
+
+                            <div class="webshot-input">
+                                <TextControl
+                                    label={ __( 'Website URL', 'website-screenshot' ) }
+                                    placeholder={ __( 'https://yoursite-url.com', 'website-screenshot' ) }
+                                    value={ websiteUrl }
+                                    onChange={ websiteUrl => setAttributes( { websiteUrl } ) }
+                                />
+
+                                <TextControl
+                                    label={ __( 'File Name', 'website-screenshot' ) }
+                                    value={ title }
+                                    onChange={ title => setAttributes( { title } ) }
+                                />
+
+                                <TextControl
+                                    label={ __( 'Alt Text', 'website-screenshot' ) }
+                                    value={ imgAlt }
+                                    onChange={ imgAlt => setAttributes( { imgAlt } ) }
+                                />
+
                                 <Button
                         	        className={ "button button-large" }
-                        	        onClick={ open }
-                        		        >
-                        		        { icons.upload }
-                        	        { __( ' Upload Image', 'website-screenshot' ) }
+                                    onClick={ evt => onFetchURL( evt ) }
+                                    >
+                                    { __( 'Take Screenshot', 'website-screenshot' ) }
                                 </Button>
-                                ) }
-                            >
-                            </MediaUpload>
-                        </div>
 
-                        <span class="or-method">{ __( 'or', 'website-screenshot' ) }</span>
-
-                        <div class="webshot-input">
-                            <TextControl
-                                label={ __( 'Website URL', 'website-screenshot' ) }
-                                value={ websiteUrl }
-                                onChange={ websiteUrl => setAttributes( { websiteUrl } ) }
-                            />
-
-                            <Button
-                    	        className={ "button button-large" }
-                                onClick={ evt => onFetchURL( evt ) }
-                                >
-                                { __( 'Load', 'website-screenshot' ) }
-                            </Button>
-
+                            </div>
                         </div>
 
                     </div>
-
 
                 </div>
             ];
@@ -286,7 +302,7 @@ export default registerBlockType(
             let imgClass = 'wp-block-image';
             console.log( 'blockAlignment', blockAlignment );
             if ( blockAlignment ) {
-                imgClass += 'align'+blockAlignment;
+                imgClass += ' align'+blockAlignment;
             }
 
 

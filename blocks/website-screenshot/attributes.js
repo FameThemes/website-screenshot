@@ -35,10 +35,7 @@ const attributes = {
         type: 'number',
         default: null,
     },
-    textAlignment: {
-        type: 'string',
-        default: 'none'
-    },
+
     blockAlignment: {
         type: 'string',
         default: 'none'

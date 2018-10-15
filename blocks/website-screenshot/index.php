@@ -4,6 +4,9 @@ namespace WS\Blocks\Website_Screenshot;
 
 add_action( 'wp_ajax_website_screenshot_fetch', __NAMESPACE__ . '\ajax_fetch' );
 
+/**
+ * Ajax to load image
+ */
 function ajax_fetch() {
 
 	$content = trim(file_get_contents("php://input"));
@@ -42,14 +45,36 @@ function ajax_fetch() {
 		die();
 	}
 
-	$url = get_screenshot_url( $post_data['websiteUrl'], $post_data );
+	$api_args =  get_option( 'website_screenshot_api_args' );
+	if( ! array( $api_args ) ) {
+		$api_args = array();
+	}
+
+	$api_args = wp_parse_args( $api_args, array(
+		'format' => 'png',
+		'imgWidth' => null,
+		'viewportWidth' => null,
+		'viewportHeight' => null,
+		'deviceScaleFactor' => null,
+		'delay' => null,
+		'waitUntilEvent' => null,
+		'full' => null,
+		'timeout' => null,
+		'fresh' => null,
+	) );
+
+	if( $api_args['format'] != 'jpeg' ){
+		$api_args['format'] = 'png';
+	}
+
+	$url = get_screenshot_url( $post_data['websiteUrl'], $post_data, $api_args );
 
 	$post_data['title'] = sanitize_file_name( $post_data['title'] );
 
 	$file_name = $post_data['title']  ? $post_data['title'] : sanitize_file_name( $post_data['websiteUrl'] );
 
 	Download_File::get_instance()->set_file_title( $post_data['title'] );
-	$id = Download_File::get_instance()->download_file( $url, $file_name.'.png' );
+	$id = Download_File::get_instance()->download_file( $url, $file_name.'.'.$api_args['format'] );
 
 	if ( $id ) {
 		// Don't forget to stop execution afterward.
@@ -66,8 +91,16 @@ function ajax_fetch() {
 
 }
 
-
-function get_screenshot_url( $url, $args = array() ){
+/**
+ *  Get Screenshot from screenshotbin
+ *
+ * @param $url
+ * @param array $args
+ * @param array $api_args
+ *
+ * @return bool
+ */
+function get_screenshot_url( $url, $args = array(), $api_args = array() ){
 	// We'll use PHP curl, but other http clients will work!
 	$api_url = "https://api.screenshotbin.com/v1/screenshot";
 	$data = array(
@@ -78,6 +111,19 @@ function get_screenshot_url( $url, $args = array() ){
 		'delay' =>  null,
 		'full' =>  false,
 	);
+
+	unset( $api_args['url'] );
+	foreach ( $api_args as $k => $v ) {
+		if ( $v && is_numeric( $v ) ) {
+			$api_args[ $k ] = intval( $v );
+		} elseif ( $v == 'true' ) {
+			$api_args[ $k ] = true;
+		} elseif ( ! $v ) {
+			unset( $api_args[ $k ] );
+		}
+	}
+
+	$data = array_merge( $data, $api_args );
 
 	if ( $args['viewportWidth'] ) {
 		$data['viewportWidth'] = absint( $args['viewportWidth'] );
@@ -96,7 +142,10 @@ function get_screenshot_url( $url, $args = array() ){
 	}
 
 	$data_string = json_encode($data);
-	$secret_api_key = "8njnye7gratc8rt57v60bei6olfunbou";
+	$secret_api_key = get_option( 'website_screenshot_api_secret' );
+	if ( ! $secret_api_key ) {
+		return false;
+	}
 
 	$curl = curl_init($api_url);
 	curl_setopt($curl, CURLOPT_POST, true);
@@ -114,6 +163,11 @@ function get_screenshot_url( $url, $args = array() ){
 }
 
 
+/**
+ * Class Download_File
+ *
+ * @package WS\Blocks\Website_Screenshot
+ */
 class Download_File {
 
 	static private $_instance = null;
@@ -127,6 +181,11 @@ class Download_File {
 		return self::$_instance;
 	}
 
+	/**
+	 * Set Image Title
+	 *
+	 * @param $title
+	 */
 	function set_file_title( $title ){
 		$this->title = $title;
 	}
@@ -240,14 +299,3 @@ class Download_File {
 		return $file_path_or_id;
 	}
 }
-
-
-add_action( 'init', function(){
-	if ( isset( $_GET['dl'] ) ) {
-		//$url = get_screenshot_url( 'https://premium.wpmudev.org/blog/wp-content/uploads/2018/08/interview-kenn-kitchen-1050x273.png' );
-		$url = get_screenshot_url( 'https://premium.wpmudev.org/' );
-		$id = Download_File::get_instance()->download_file( $url );
-		var_dump( $id );
-		die();
-	}
-} );

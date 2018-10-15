@@ -1,32 +1,30 @@
-$black: #000;
-$dark: #f7b733;
-$light: rgba(254, 243, 224, 0.52);
+.wp-block-ft-website-screenshot {
+    .alignwide {
+        left: 50%;
+        margin-left: -37.5vw;
+        clear: both;
+        position: relative;
+        width: 75vw;
+        max-width: 75vw;
+    }
+}
 
-.entry-content .wp-block-website-screenshot-inspector-control-fields,
-.wp-block-website-screenshot-inspector-control-fields {
 
-    background: $light;
-    border: 5px $dark solid;
-    padding: 1rem;
+@media (min-width: 768px) {
 
-    &.high-contrast {
-        background: $black;
-        border-color: $black;
-        color: white;
+    .wp-block-ft-website-screenshot {
+        .alignwide {
+            left: 50%;
+            margin-left: -37.5vw;
+            clear: both;
+            position: relative;
+            width: 75vw;
+            max-width: 75vw;
+        }
     }
 
-    h2 {
-        color: $dark;
-        font-size: 2rem;
-        margin: 1rem 0;
-    }
-
-    p {
-        font-size: 1.4rem;
-    }
-
-    li {
-        list-style-position: inside;
+    .no-sidebar {
+        
     }
 
 }

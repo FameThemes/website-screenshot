@@ -5,6 +5,10 @@
             position: absolute;
             top: 1em;
             right: 1em;
+            color: red;
+            svg {
+                fill: currentColor;
+            }
         }
         .wp-block-image  {
             &.alignfull {
@@ -13,10 +17,29 @@
             }
         }
     }
+
     .media-form  {
-        max-width: 600px;
-        margin: 0 auto;
-        padding: 2.5em;
+
+        background: #ededed;
+        text-align: center;
+        .media-form-inner {
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 2.5em;
+        }
+        .no-image {
+            border: 2px dashed #ddd;
+            padding: 1.5em;
+            margin-bottom: 1em;
+            text-transform: uppercase;
+            background: #f5f5f5;
+        }
+
+        .or-method {
+            text-transform: uppercase;
+            display: block;
+            margin: 10px 0px 5px;
+        }
 
         &.image-added {
             display: none;
