@@ -2,6 +2,15 @@
  * Internal block libraries
  */
 const { __ } = wp.i18n;
+
+import {
+	get,
+	isEmpty,
+	map,
+	pick,
+	startCase,
+} from 'lodash';
+
 const { Component } = wp.element;
 const {
     InspectorControls,
@@ -68,7 +77,6 @@ const LINK_DESTINATION_CUSTOM = 'custom';
 const ALLOWED_MEDIA_TYPES = [ 'image' ];
 
 
-
 /**
  * Create an Inspector Controls wrapper Component
  */
@@ -78,6 +86,8 @@ export default class Inspector extends Component {
         super( ...arguments );
 
         this.onSetLinkDestination = this.onSetLinkDestination.bind( this );
+        this.onSetCustomHref = this.onSetCustomHref.bind( this );
+        this.updateImageURL = this.updateImageURL.bind( this );
         this.onSetCustomHref = this.onSetCustomHref.bind( this );
 
     }
@@ -91,17 +101,21 @@ export default class Inspector extends Component {
 		];
 	}
 
+    updateImageURL( url ) {
+		this.props.setAttributes( { imgURL: url } );
+	}
+
     onSetLinkDestination( value ) {
 		let url;
 
 		if ( value === LINK_DESTINATION_NONE ) {
 			url = undefined;
 		} else if ( value === LINK_DESTINATION_MEDIA ) {
-			url = this.props.attributes.url;
+			url = this.props.attributes.imgURL;
 		} else if ( value === LINK_DESTINATION_ATTACHMENT ) {
 			url = this.props.image && this.props.image.link;
 		} else {
-			url = this.props.attributes.href;
+			url = this.props.attributes.url;
 		}
 
 		this.props.setAttributes( {
@@ -111,17 +125,12 @@ export default class Inspector extends Component {
 	}
 
     onSetCustomHref( value ) {
-		this.props.setAttributes( { href: value } );
+		this.props.setAttributes( { url: url } );
 	}
 
     getAvailableSizes() {
-		return [
-                    { value: 'a', label: __( 'Option A', 'website-screenshot' ) },
-                    { value: 'b', label: __( 'Option B', 'website-screenshot' ) },
-                    { value: 'c', label: __( 'Option C', 'website-screenshot' ) },
-                ]
+		return get( this.props.image, [ 'media_details', 'sizes' ], {} );
 	}
-
 
     render() {
         const { attributes: {
@@ -139,7 +148,6 @@ export default class Inspector extends Component {
         }, setAttributes, attributes } = this.props;
 
 
-
         if ( ! imgURL ) {
             return '';
         }
@@ -147,7 +155,6 @@ export default class Inspector extends Component {
         const isLinkURLInputDisabled = linkTo !== 'custom';
 
         const availableSizes = this.getAvailableSizes();
-
 
         return (
 
@@ -164,6 +171,18 @@ export default class Inspector extends Component {
                         value={ imgAlt }
                         onChange={ imgAlt => setAttributes( { imgAlt } ) }
                     />
+
+                    { ! isEmpty( availableSizes ) && (
+						<SelectControl
+							label={ __( 'Image Size', 'website-screenshot' ) }
+							value={ imgURL }
+							options={ map( availableSizes, ( size, name ) => ( {
+								value: size.source_url,
+								label: startCase( name ),
+							} ) ) }
+							onChange={ imgURL => this.updateImageURL( imgURL ) }
+						/>
+					) }
 
 
                 </PanelBody>
@@ -190,11 +209,7 @@ export default class Inspector extends Component {
 						/>
 					) }
 
-
                 </PanelBody>
-
-
-
 
             </InspectorControls>
         );

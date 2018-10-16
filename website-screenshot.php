@@ -1,12 +1,12 @@
 <?php
 /*
-Plugin Name: Website screenshot blocks for Gutenberg
-Plugin URL: https://pressmaximum.com/websit-screenshot
-Description:
+Plugin Name: Website Screenshot
+Plugin URL: https://famethemes.com/websit-screenshot
+Description: Website screenshot using screenshotbin API
 Version: 1.0.0
-Author: PressMaximum
-Author URI: https://pressmaximum.com
-Text Domain: wordpress-seo
+Author: FameThemes
+Author URI: https://famethemes.com
+Text Domain: website-screenshot
 Domain Path: /languages/
 Contributors: shrimp2t
 */
