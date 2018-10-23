@@ -58,7 +58,7 @@ function enqueue_frontend_assets() {
 	if ( is_admin() ) {
 		return;
 	}
-
+	/*
 	$block_path = '/assets/js/frontend.blocks.js';
 	wp_enqueue_script(
 		'website-screenshot-frontend',
@@ -66,4 +66,5 @@ function enqueue_frontend_assets() {
 		[],
 		filemtime( _get_plugin_directory() . $block_path )
 	);
+	*/
 }

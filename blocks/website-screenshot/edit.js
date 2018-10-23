@@ -12,10 +12,22 @@
  import './style.scss';
  import './editor.scss';
 
- const { withSelect } = wp.data;
- const { compose } = wp.compose;
- const { Component } = wp.element;
 
+import {
+    get,
+    isEmpty,
+    map,
+    pick,
+    times,
+    startCase,
+} from 'lodash';
+
+//window.lodash = _.noConflict();
+
+
+const { withSelect } = wp.data;
+const { compose } = wp.compose;
+const { Component } = wp.element;
 
  const { __ } = wp.i18n;
  const {
@@ -29,6 +41,7 @@
 
  const {
      Editable,
+     mediaUpload,
      MediaUpload,
  } = wp.editor;
 
@@ -43,6 +56,8 @@
      SelectControl
  } = wp.components;
 
+
+const ALLOWED_MEDIA_TYPES = [ 'image' ];
 
 class ImageEdit extends Component {
 	constructor() {
@@ -90,12 +105,13 @@ class ImageEdit extends Component {
             className, setAttributes, attributes
         } = props;
 
-        if ( button.classList.contains('is-busy') ) {
-            evt.preventDefault();
+        if ( button.classList.contains('is-loading') ) {
+            //return false;
+            return ;
         }
 
-        button.classList.add("is-busy");
-        button.setAttribute("disabled", "");
+        button.classList.add("is-loading");
+        //button.setAttribute("disabled", "");
 
         let settingValues = Helper.getSettingsValue( attributes );
         settingValues._nonce = WebsiteScreenShot.nonce;
@@ -122,8 +138,8 @@ class ImageEdit extends Component {
         let data = await response.json();
 
         // removeAttribute
-        button.classList.remove("is-busy");
-        button.removeAttribute("disabled");
+        button.classList.remove("is-loading");
+        //button.removeAttribute("disabled");
         console.log( 'data', data );
 
         setAttributes( {
@@ -140,8 +156,6 @@ class ImageEdit extends Component {
        console.log( 'settings', Helper.getSettingsValue( attributes ) );
 
     }
-
-
 
 	render () {
 
@@ -164,7 +178,6 @@ class ImageEdit extends Component {
 
         let settings = Helper.getSettings( attributes );
         let values = Helper.getSettingsValue( attributes );
-
 
         return [
             <Inspector  {...{ setAttributes, ...this.props }} />,
@@ -199,26 +212,6 @@ class ImageEdit extends Component {
                         <div class="no-image">
                             { __( 'No Image Selected', 'website-screenshot' ) }
                         </div>
-
-                        <div class="media-upload">
-                            <MediaUpload
-                                onSelect={ this.onSelectImage }
-                                type="image"
-                                value={ imgID }
-                                render={ ( { open } ) => (
-                                <Button
-                                    className={ "button button-large" }
-                                    onClick={ open }
-                                        >
-                                        { icons.upload }
-                                    { __( ' Upload Image', 'website-screenshot' ) }
-                                </Button>
-                                ) }
-                            >
-                            </MediaUpload>
-                        </div>
-
-                        <span class="or-method">{ __( 'or', 'website-screenshot' ) }</span>
 
                         <div class="webshot-input">
                             <TextControl

@@ -91,35 +91,33 @@ registerBlockType(
     	    } = props;
 
             let imgClass = 'wp-block-image';
+           // let imgClass = 'wp-block-image';
 
             if ( blockAlignment ) {
                 imgClass += ' align'+blockAlignment;
             }
 
-
-            if ( ! imgURL  ) {
+            if ( ! imgURL ) {
                 return  (
                     <div data-id={ imgID } className={ className }>
                     </div>
                 )
             }
 
-
             const image = (
-                        <img
-                            src={ imgURL }
-                            alt={ imgAlt }
-                            className={ imgClass }
-                        />
+                        <figure className={ imgClass }>
+                            <img
+                                src={ imgURL }
+                                alt={ imgAlt }
+                            />
+                        </figure>
                     );
-
             return (
-
                 <div data-id={ imgID } className={ className }>
-                    { url ? <a href={ url }>{ image }</a> : image }
+                { url ? <a href={ url }>{ image }</a>: image }
                 </div>
-
             );
+
         },
     },
 );

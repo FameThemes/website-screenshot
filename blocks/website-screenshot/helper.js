@@ -14,7 +14,6 @@ const Helper = {
 
     },
 
-
     getSettingsValue: ( attributes ) => {
     	let settings = {};
     	for( let attribute in attributes ) {

@@ -20,6 +20,20 @@
         }
     }
 
+
+    @keyframes components-button__busy-animation {
+        0% {
+            background-position: 200px 0;
+        }
+    }
+
+    .components-button.is-loading {
+        animation: components-button__busy-animation 2.5s infinite linear;
+        background-size: 100px 100%;
+        background-image: repeating-linear-gradient(-45deg,#e2e4e7,#fff 11px,#fff 0,#e2e4e7 20px);
+        opacity: 1;
+    }
+
     .media-form  {
 
         background: #ededed;

@@ -3,6 +3,7 @@
  */
 const { __ } = wp.i18n;
 
+
 import {
 	get,
 	isEmpty,
@@ -10,6 +11,9 @@ import {
 	pick,
 	startCase,
 } from 'lodash';
+
+
+//window.lodash = _.noConflict();
 
 const { Component } = wp.element;
 const {

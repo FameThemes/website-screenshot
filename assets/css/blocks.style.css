@@ -1,1 +1,16 @@
-.wp-block-ft-website-screenshot .alignwide{left:50%;margin-left:-37.5vw;clear:both;position:relative;width:75vw;max-width:75vw}@media (min-width: 768px){.wp-block-ft-website-screenshot .alignwide{left:50%;margin-left:-37.5vw;clear:both;position:relative;width:75vw;max-width:75vw}}
+.wp-block-ft-website-screenshot .alignwide {
+  left: 50%;
+  margin-left: -37.5vw;
+  clear: both;
+  position: relative;
+  width: 75vw;
+  max-width: 75vw; }
+
+@media (min-width: 768px) {
+  .wp-block-ft-website-screenshot .alignwide {
+    left: 50%;
+    margin-left: -37.5vw;
+    clear: both;
+    position: relative;
+    width: 75vw;
+    max-width: 75vw; } }

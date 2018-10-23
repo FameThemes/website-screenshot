@@ -60,6 +60,15 @@ module.exports = {
         use: editBlocksCSSPlugin.extract( extractConfig ),
       },
     ],
+    'loaders': [{
+        'loader': 'babel-loader',
+        'test': /\.js$/,
+        'exclude': /node_modules/,
+        'query': {
+            'plugins': ['lodash'],
+            'presets': [['@babel/env', { 'targets': { 'node': 6 } }]]
+        }
+    }]
   },
   plugins: [
     blocksCSSPlugin,
