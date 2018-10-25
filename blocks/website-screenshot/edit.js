@@ -42,7 +42,6 @@ const { Component } = wp.element;
  const {
      Editable,
      mediaUpload,
-     MediaUpload,
  } = wp.editor;
 
  const {
@@ -75,7 +74,6 @@ class ImageEdit extends Component {
             imgAlt: img.alt,
         } );
     }
-
 
     onRemoveImage () {
         const { setAttributes } = this.props;

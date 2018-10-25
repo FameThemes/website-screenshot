@@ -119,5 +119,59 @@ registerBlockType(
             );
 
         },
+
+
+        deprecated: [
+        {
+            attributes,
+
+            save( props ) {
+
+
+                const {
+                    attributes: {
+                        websiteUrl,
+                        imgID,
+                        imgURL,
+                        imgAlt,
+                        textAlignment,
+                        blockAlignment,
+                        url
+                    },
+                    attributes, className, setAttributes, isSelected
+                } = props;
+
+                let imgClass = 'wp-block-image';
+
+                if ( blockAlignment ) {
+                    imgClass += ' align'+blockAlignment;
+                }
+
+                if ( ! imgURL ) {
+                    return  (
+                        <div data-id={ imgID } className={ className }>
+                        </div>
+                    )
+                }
+
+                const image = (
+                                <img className={ imgClass }
+                                    src={ imgURL }
+                                    alt={ imgAlt }
+                                />
+                            );
+                return (
+                    <div data-id={ imgID } className={ className }>
+                    { url ? <a href={ url }>{ image }</a>: image }
+                    </div>
+                );
+
+            },
+
+
+        }
+    ]
+
+
     },
 );
