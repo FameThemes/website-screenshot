@@ -3,7 +3,7 @@
 Plugin Name: Website screenshot blocks for Gutenberg
 Plugin URL: https://pressmaximum.com/websit-screenshot
 Description: Website screenshot using screenshotbin API
-Version: 1.0.0
+Version: 1.0.1
 Author: PressMaximum
 Author URI: https://pressmaximum.com
 Text Domain: website-screenshot

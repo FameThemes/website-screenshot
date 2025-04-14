@@ -2,7 +2,7 @@
 Contributors: pressmaximum, shrimp2t
 Tags: website screenshot, screenshot, screenshotbin
 Requires at least: 3.0.1
-Tested up to: 4.9.8
+Tested up to: 6.8
 Requires PHP: 5.2.4
 Stable tag: trunk
 License: GPLv2 or later
@@ -32,6 +32,9 @@ e.g.
 4. Settings
 
 == Changelog ==
+
+= 1.0.1 =
+* Fix plugin review issues for WordPress 6.8
 
 = 1.0 =
 * Initial.
